@@ -2,12 +2,19 @@
 
 <template>
 	<main class="default-layout">
-		<slot />
+		<div class="default-layout__content">
+			<slot />
+		</div>
 	</main>
 </template>
 
 <style lang="scss" scoped>
 .default-layout {
-	@include padding(2.4rem);
+	@include padding(1.6rem, 2.4rem);
+
+	&__content {
+		max-width: 144rem;
+		margin: 0 auto;
+	}
 }
 </style>

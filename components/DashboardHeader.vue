@@ -21,7 +21,10 @@ const modelValue = defineModel<string>();
 				</div>
 			</div>
 			<div class="navbar--right">
-				<BaseButton variant="secondary">Preview</BaseButton>
+				<BaseButton variant="secondary" class="preview">
+					<div class="preview-icon lh-0"><BaseIcon name="eye" /></div>
+					<span class="preview-text">Preview</span>
+				</BaseButton>
 			</div>
 		</nav>
 	</header>
@@ -30,6 +33,7 @@ const modelValue = defineModel<string>();
 <style lang="scss" scoped>
 .navbar {
 	@include padding(1.6rem 1.6rem 1.6rem 2.4rem);
+	margin-bottom: 2.4rem;
 }
 
 .tabs {
@@ -39,6 +43,10 @@ const modelValue = defineModel<string>();
 		@include padding(1.1rem 2.7rem);
 		color: $gray;
 
+		&:hover {
+			color: $purple;
+		}
+
 		&--active {
 			background-color: $purple-light;
 			color: $purple;
@@ -47,6 +55,17 @@ const modelValue = defineModel<string>();
 		&__text {
 			@include visibility(none, block, block);
 		}
+	}
+}
+
+.preview {
+	@include padding(1.1rem 1.6rem, 1.1rem 2.7rem);
+	&-icon {
+		@include visibility(block, none, none);
+	}
+
+	&-text {
+		@include visibility(none, block, block);
 	}
 }
 </style>
