@@ -1,75 +1,41 @@
-# Nuxt 3 Minimal Starter
+# Devlinks
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Devlinks is a full stack link-sharing web application for developers!
 
-## Setup
+This is a challenge from [FrontendMentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT).
 
-Make sure to install the dependencies:
+## Deployment
 
-```bash
-# npm
-npm install
+This was built with love 💚 and deployed on Vercel ⚡️. [Click me to view the project 🔗](https://devlinks-lac.vercel.app/)
 
-# pnpm
-pnpm install
+## Stack
 
-# yarn
-yarn install
+This was built using the Technology Stack of Dreams - Nuxt 3, Supabase and Typescript. Other notable mentions are SCSS (BEM methodology), VueDraggableNext, Pinia.
 
-# bun
-bun install
-```
+## Features
 
-## Development Server
+This is pretty much packed with every basic feature of a link sharing web application
 
-Start the development server on `http://localhost:3000`:
+1. Authentication:
 
-```bash
-# npm
-npm run dev
+    - Sign in/Sign or Email and Password
 
-# pnpm
-pnpm run dev
+2. CRUD
 
-# yarn
-yarn dev
+    - Create, read, update and delete links
+    - Update user profile columns
+    - Preview their profile and copy the link to their clipboard so they can share publicly.
 
-# bun
-bun run dev
-```
+3. Miscellaneous
+    - Drag and drop for reordering of links
 
-## Production
+## What I've learnt
 
-Build the application for production:
+During the course of this project, I've learnt and practised to
 
-```bash
-# npm
-npm run build
+-   Use mixins for reusability and the SCSS 7-1 architecture
+-   Integrate the frontend with Supabase
 
-# pnpm
-pnpm run build
+## Challanges
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Being a 10x Dev, I didn't run have any issues implementing this🙂.
