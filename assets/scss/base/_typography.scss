@@ -1,0 +1,19 @@
+.heading-m {
+	@include typography(2.4rem, 3.6rem, 3.2rem, 4.8rem);
+	font-weight: 700;
+}
+
+.heading-s {
+	@include typography(1.6rem, 2.4rem);
+	font-weight: 600;
+
+}
+
+.body-m {
+	@include typography(1.6rem, 2.4rem);
+}
+
+.body-s {
+	@include typography(1.2rem, 1.8rem);
+
+}

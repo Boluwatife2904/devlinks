@@ -1,0 +1,79 @@
+@mixin typography($mobile-fs, $mobile-lh, $tablet-fs: $mobile-fs, $tablet-lh: $mobile-lh, $desktop-fs: $tablet-fs, $desktop-lh: $tablet-lh) {
+	font-size: $mobile-fs;
+	line-height: $mobile-lh;
+
+	@media screen and (min-width: $tablet) {
+		font-size: $tablet-fs;
+		line-height: $tablet-lh;
+	}
+
+	@media screen and (min-width: $desktop) {
+		font-size: $desktop-fs;
+		line-height: $desktop-lh;
+	}
+}
+
+@mixin gap($mobile-gap, $tablet-gap: $mobile-gap, $desktop-gap: $tablet-gap) {
+	gap: $mobile-gap;
+
+	@media screen and (min-width: $tablet) {
+		gap: $tablet-gap;
+	}
+
+	@media screen and (min-width: $desktop) {
+		gap: $desktop-gap;
+	}
+}
+
+@mixin padding($mobile-padding, $tablet-padding: $mobile-padding, $desktop-padding: $tablet-padding) {
+	padding: $mobile-padding;
+
+	@media screen and (min-width: $tablet) {
+		padding: $tablet-padding;
+	}
+
+	@media screen and (min-width: $desktop) {
+		padding: $desktop-padding;
+	}
+
+}
+
+@mixin flex-direction($mob, $tab, $desk: $tab) {
+	flex-direction: $mob;
+
+	@media screen and (min-width: $tablet) {
+		flex-direction: $tab;
+	}
+
+	@media screen and (min-width: $desktop) {
+		flex-direction: $desk;
+	}
+}
+
+@mixin component-variant($background, $color, $border, $background-hover: $background, $color-hover: $color, $border-hover: $border) {
+	background-color: $background;
+	color: $color;
+	border: 0.1rem solid $border;
+	transition: all 0.2s ease;
+
+	&:not(:disabled) {
+		&:hover {
+			background-color: $background-hover;
+			color: $color-hover;
+			border-color: $border-hover;
+		}
+	}
+
+}
+
+@mixin visibility($mob, $tab, $desk) {
+	display: $mob;
+
+	@media screen and (min-width: $tablet) {
+		display: $tab;
+	}
+
+	@media screen and (min-width: $desktop) {
+		display: $desk;
+	}
+}

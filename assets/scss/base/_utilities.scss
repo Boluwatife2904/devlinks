@@ -1,0 +1,119 @@
+// Backgrounds and colors classes
+$colors: (
+	"purple": $purple,
+	"purple-hover": $purple-hover,
+	"purple-light": $purple-light,
+	"gray": $gray,
+	"dark-gray": $dark-gray,
+	"light-gray": $light-gray,
+	"white": $white,
+	"red": $red,
+);
+
+@each $name,
+$value in $colors {
+	.text-#{$name} {
+		color: $value !important;
+	}
+
+	.bg-#{$name} {
+		background: $value !important;
+	}
+}
+
+// Display classes
+$displays: flex, grid, block;
+
+@each $display in $displays {
+	.#{$display} {
+		display: $display;
+	}
+}
+
+// Item alignment classes
+$items-alignment: (
+	"items-center": center,
+	"items-start": start,
+	"items-end": end,
+);
+
+@each $name,
+$value in $items-alignment {
+	.#{$name} {
+		align-items: $value;
+	}
+}
+
+// Content alignment classes
+$content-alignment: (
+	"content-center": center,
+	"content-between": space-between,
+	"content-end": end,
+);
+
+@each $name,
+$value in $content-alignment {
+	.#{$name} {
+		justify-content: $value;
+	}
+}
+
+// Flex direction classes
+$flex-direction: column, row;
+
+@each $direction in $flex-direction {
+	.flex-#{$direction} {
+		flex-direction: $direction;
+	}
+}
+
+// Font weight classes
+$font-weights: 400, 500, 600, 700, 800;
+
+@each $font-weight in $font-weights {
+	.weight-#{$font-weight} {
+		font-weight: $font-weight;
+	}
+}
+
+// Border radius
+$border-radiuses: (
+	"8": 0.8rem,
+	"12": 1.2rem,
+);
+
+@each $name,
+$value in $border-radiuses {
+	.br-#{$name} {
+		border-radius: $value !important;
+	}
+}
+
+// Gap classes
+$gaps: (
+	"4": 0.4rem,
+	"6": 0.6rem,
+	"8": 0.8rem,
+	"16": 1.6rem,
+	"24": 2.4rem,
+);
+
+@each $name,
+$value in $gaps {
+	.gap-#{$name} {
+		@include gap($value);
+	}
+}
+
+// Position classes
+$positions: relative, absolute, fixed;
+
+@each $position in $positions {
+	.position-#{$position} {
+		position: $position;
+	}
+}
+
+.w-100 {
+	width: 100%;
+}
