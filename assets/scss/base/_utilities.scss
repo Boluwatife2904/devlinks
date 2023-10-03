@@ -22,7 +22,7 @@ $value in $colors {
 }
 
 // Display classes
-$displays: flex, grid, block;
+$displays: flex, grid, block, none;
 
 @each $display in $displays {
 	.#{$display} {
@@ -127,6 +127,15 @@ $text-alignments: left, right, center, justify;
 	width: 100%;
 }
 
+.h-100 {
+	width: 100%;
+}
+
 .lh-0 {
 	line-height: 0;
+}
+
+.img-fluid {
+	height: auto;
+	max-width: 100%;
 }

@@ -77,3 +77,15 @@
 		display: $desk;
 	}
 }
+
+@mixin items-alignment($mob, $tab, $desk: $tab) {
+	align-items: $mob;
+
+	@media screen and (min-width: $tablet) {
+		align-items: $tab;
+	}
+
+	@media screen and (min-width: $desktop) {
+		align-items: $desk;
+	}
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const currentView = ref("links");
+const currentView = ref("profile");
 </script>
 
 <template>
@@ -8,7 +8,8 @@ const currentView = ref("links");
 		<div class="dashboard__content grid">
 			<div class="dashboard__content--left bg-white"></div>
 			<div class="dashboard__content--right bg-white">
-				<DashboardLinks />
+				<LazyDashboardLinks v-if="currentView === 'links'" />
+				<LazyDashboardProfile v-else-if="currentView === 'profile'" />
 			</div>
 		</div>
 	</div>
