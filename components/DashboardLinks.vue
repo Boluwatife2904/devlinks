@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div class="links__footer flex content-end">
-			<BaseButton>Save</BaseButton>
+			<BaseButton size="full">Save</BaseButton>
 		</div>
 	</div>
 </template>
@@ -33,7 +33,13 @@
 
 	&__footer {
 		border-top: 1px solid $borders;
-		@include padding(2.4rem, 2.4rem 4rem);
+		@include padding(1.6rem, 2.4rem 4rem);
+
+		button {
+			@media screen and (min-width: $tablet) {
+				width: max-content;
+			}
+		}
 	}
 }
 </style>
