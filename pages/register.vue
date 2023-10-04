@@ -26,8 +26,8 @@ const createAccount = () => {};
 <template>
 	<section class="flex flex-column gap-24">
 		<BaseInput v-model="form.email" icon="email" type="email" id="email" name="email" label="Email address" placeholder="e.g. alex@email.com" :is-invalid="v$.email.$error" />
-		<BaseInput v-model="form.password" icon="lock" type="password" id="password" name="password" label="Create password" placeholder="Create your password" :is-invalid="v$.password.$error" />
-		<BaseInput v-model="form.confirmPassword" icon="lock" type="password" id="confirmPassword" name="confirmPassword" label="Confirm password" placeholder="Confirm your password" :is-invalid="v$.confirmPassword.$error" />
+		<BaseInput v-model="form.password" icon="lock" type="password" id="password" name="password" label="Create password" placeholder="At least 8 characters" :is-invalid="v$.password.$error" />
+		<BaseInput v-model="form.confirmPassword" icon="lock" type="password" id="confirmPassword" name="confirmPassword" label="Confirm password" placeholder="At least 8 characters" :is-invalid="v$.confirmPassword.$error" />
 		<span class="block body-s text-gray">Password must contain at least 8 characters</span>
 		<BaseButton variant="primary" size="full" type="button" :disabled="v$.$invalid" @click="createAccount">Create new account</BaseButton>
 	</section>

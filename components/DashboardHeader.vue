@@ -7,7 +7,7 @@ const modelValue = defineModel<string>();
 </script>
 
 <template>
-	<header>
+	<header class="w-100">
 		<nav class="navbar flex items-center content-between br-12 bg-white">
 			<div class="navbar--left">
 				<AppLogo usage="dashboard" />
@@ -31,9 +31,18 @@ const modelValue = defineModel<string>();
 </template>
 
 <style lang="scss" scoped>
+header {
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 11
+}
 .navbar {
 	@include padding(1.6rem 1.6rem 1.6rem 2.4rem);
 	margin-bottom: 2.4rem;
+// 	position: sticky;
+// 	top: 0;
+// 	left: 0;
 }
 
 .tabs {

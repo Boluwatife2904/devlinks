@@ -1,10 +1,25 @@
 <script setup lang="ts">
-const haveUploadedImage = ref(true);
+const haveUploadedImage = ref(false);
+const imageUrl = ref("");
 const form = reactive({
 	firstName: "",
 	lastName: "",
 	email: "",
 });
+
+const handleImageSelect = (event: Event) => {
+	const target = event.target as HTMLInputElement;
+	const files = target.files;
+	if (files && files.length > 0) {
+		const file = files[0];
+		const reader = new FileReader();
+		reader.onload = function () {
+			imageUrl.value = reader.result as string;
+			haveUploadedImage.value = true;
+		};
+		reader.readAsDataURL(file);
+	}
+};
 </script>
 
 <template>
@@ -19,8 +34,8 @@ const form = reactive({
 					<span class="body-m block text-gray w-100 label">Profile picture</span>
 					<div class="flex gap-24">
 						<div class="picker br-12 position-relative">
-							<img v-if="haveUploadedImage" src="/image.png" alt="user image" class="img-fluid block" />
-							<input type="file" name="image" id="image" class="none" accept="image/*" />
+							<img v-if="haveUploadedImage" :src="imageUrl" alt="user image" class="img-fluid block" />
+							<input type="file" name="image" id="image" class="none" accept="image/png, image/jpeg" @change="handleImageSelect" />
 							<label for="image" class="w-100 h-100 flex flex-column gap-8 items-center content-center cursor pointer position-absolute" :class="{ uploaded: haveUploadedImage }">
 								<BaseIcon name="picture" />
 								<span class="heading-s">

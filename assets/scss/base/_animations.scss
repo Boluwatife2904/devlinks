@@ -1,0 +1,16 @@
+.slideIn-enter-from,
+.slideIn-leave-to {
+	opacity: 0;
+	transform: translateY(2rem);
+}
+
+.slideIn-leave-from,
+.slideIn-enter-to {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+.slideIn-enter-active,
+.slideIn-leave-active {
+	transition: all 0.25s ease-in-out;
+}
