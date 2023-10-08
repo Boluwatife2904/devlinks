@@ -4,6 +4,8 @@ const tabs = [
 	{ key: "profile", label: "Profile details" },
 ];
 const modelValue = defineModel<string>();
+
+const { showPreview } = storeToRefs(useStore());
 </script>
 
 <template>
@@ -21,7 +23,7 @@ const modelValue = defineModel<string>();
 				</div>
 			</div>
 			<div class="navbar--right">
-				<BaseButton variant="secondary" class="preview">
+				<BaseButton variant="secondary" class="preview" @click="showPreview = !showPreview">
 					<div class="preview-icon lh-0"><BaseIcon name="eye" /></div>
 					<span class="preview-text">Preview</span>
 				</BaseButton>
@@ -35,14 +37,14 @@ header {
 	position: sticky;
 	top: 0;
 	left: 0;
-	z-index: 11
+	z-index: 11;
 }
 .navbar {
 	@include padding(1.6rem 1.6rem 1.6rem 2.4rem);
 	margin-bottom: 2.4rem;
-// 	position: sticky;
-// 	top: 0;
-// 	left: 0;
+	// 	position: sticky;
+	// 	top: 0;
+	// 	left: 0;
 }
 
 .tabs {

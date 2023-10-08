@@ -1,11 +1,6 @@
 <script setup lang="ts">
+const { userData } = useStore();
 const haveUploadedImage = ref(false);
-const imageUrl = ref("");
-const form = reactive({
-	firstName: "",
-	lastName: "",
-	email: "",
-});
 
 const handleImageSelect = (event: Event) => {
 	const target = event.target as HTMLInputElement;
@@ -14,7 +9,7 @@ const handleImageSelect = (event: Event) => {
 		const file = files[0];
 		const reader = new FileReader();
 		reader.onload = function () {
-			imageUrl.value = reader.result as string;
+			userData.image = reader.result as string;
 			haveUploadedImage.value = true;
 		};
 		reader.readAsDataURL(file);
@@ -34,7 +29,7 @@ const handleImageSelect = (event: Event) => {
 					<span class="body-m block text-gray w-100 label">Profile picture</span>
 					<div class="flex gap-24">
 						<div class="picker br-12 position-relative">
-							<img v-if="haveUploadedImage" :src="imageUrl" alt="user image" class="img-fluid block" />
+							<img v-if="haveUploadedImage" :src="userData.image" alt="user image" class="img-fluid block" />
 							<input type="file" name="image" id="image" class="none" accept="image/png, image/jpeg" @change="handleImageSelect" />
 							<label for="image" class="w-100 h-100 flex flex-column gap-8 items-center content-center cursor pointer position-absolute" :class="{ uploaded: haveUploadedImage }">
 								<BaseIcon name="picture" />
@@ -50,15 +45,15 @@ const handleImageSelect = (event: Event) => {
 				<div class="profile__information flex flex-column br-12 bg-light-gray">
 					<div class="flex">
 						<span class="block w-100">First name*</span>
-						<BaseInput type="text" v-model="form.firstName" class="w-100" id="firstName" name="firstName" placeholder="e.g. John" />
+						<BaseInput type="text" v-model="userData.firstName" class="w-100" id="firstName" name="firstName" placeholder="e.g. John" />
 					</div>
 					<div class="flex">
 						<span class="block w-100">Last name*</span>
-						<BaseInput type="text" v-model="form.lastName" class="w-100" id="lastName" name="lastName" placeholder="e.g. Appleseed" />
+						<BaseInput type="text" v-model="userData.lastName" class="w-100" id="lastName" name="lastName" placeholder="e.g. Appleseed" />
 					</div>
 					<div class="flex">
 						<span class="block w-100">Email</span>
-						<BaseInput type="email" v-model="form.email" class="w-100" id="email" name="email" placeholder="e.g. email@example.com" />
+						<BaseInput type="email" v-model="userData.email" class="w-100" id="email" name="email" placeholder="e.g. email@example.com" :disabled="true" />
 					</div>
 				</div>
 			</div>

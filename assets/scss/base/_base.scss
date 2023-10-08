@@ -15,4 +15,8 @@ body {
 	line-height: 1.5;
 	box-sizing: border-box;
 	background-color: $light-gray;
+
+	&.overflow-hidden {
+		overflow: hidden;
+	}
 }

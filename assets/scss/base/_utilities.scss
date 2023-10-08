@@ -96,6 +96,7 @@ $gaps: (
 	"8": 0.8rem,
 	"12": 1.2rem,
 	"16": 1.6rem,
+	"20": 2rem,
 	"24": 2.4rem,
 );
 
@@ -139,4 +140,13 @@ $text-alignments: left, right, center, justify;
 .img-fluid {
 	height: auto;
 	max-width: 100%;
+}
+
+.profile-image {
+	margin: 0 auto;
+	height: 9.6rem;
+	width: 9.6rem;
+	object-fit: cover;
+	border-radius: 50%;
+	border: 0.4rem solid $purple;
 }

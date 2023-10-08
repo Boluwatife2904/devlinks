@@ -16,10 +16,14 @@ const inputPlaceholders: Record<string, string> = {
 	hashnode: "https://www.hashnode.com/benwright",
 	stackoverflow: "https://www.stackoverflow.com/benwright",
 };
-const links = ref<Link[]>([]);
 
-const addNewLink = () => {
+const { links } = storeToRefs(useStore());
+const end = ref<HTMLDivElement | null>(null);
+
+const addNewLink = async () => {
 	links.value.push({ id: String(Math.floor(Math.random() * 1000000)), platform: "", link: "" });
+	await nextTick()
+	end.value?.scrollIntoView({ behavior: "smooth" });
 };
 
 const deleteLink = (linkId: string) => {
@@ -52,9 +56,11 @@ const deleteLink = (linkId: string) => {
 					</div>
 				</section>
 				<EmptyState v-else />
+				<!-- <span ref="end" class="block"></span> -->
 			</div>
 		</div>
 		<div v-if="links.length > 0" class="links__footer flex content-end">
+			<span ref="end" class="block"></span>
 			<BaseButton size="full">Save</BaseButton>
 		</div>
 	</div>
@@ -71,9 +77,6 @@ const deleteLink = (linkId: string) => {
 
 	&__header {
 		@include gap(4rem);
-	}
-
-	&__content {
 	}
 
 	&__footer {
