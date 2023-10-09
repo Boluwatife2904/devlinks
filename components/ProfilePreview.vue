@@ -1,6 +1,13 @@
 <script setup lang="ts">
 const { showPreview, links } = storeToRefs(useStore());
 const { userData } = useStore();
+const config = useRuntimeConfig();
+
+const copyLink = async () => {
+	const link = `${config.public.frontendBaseUrl}/${userData.slug}`;
+	await navigator.clipboard.writeText(link);
+	useEvent("notify", { type: "success", icon: "link", message: "The link has been copied to your clipboard!" });
+};
 
 onMounted(() => {
 	document.body.classList.add("overflow-hidden");
@@ -16,15 +23,15 @@ onUnmounted(() => {
 		<div class="profile-preview__cover">
 			<div class="profile-preview__actions br-12 bg-white flex items-center content-between">
 				<BaseButton variant="secondary" @click="showPreview = false">Back to Editor</BaseButton>
-				<BaseButton>Share Link</BaseButton>
+				<BaseButton @click="copyLink">Share Link</BaseButton>
 			</div>
 		</div>
 		<div class="profile-preview__content">
-			<div v-if="userData.image" class="profile-preview__image">
-				<img :src="userData.image" alt="user image" class="block profile-image" />
+			<div v-if="userData.image_url" class="profile-preview__image">
+				<img :src="userData.image_url" alt="user image" class="block profile-image" />
 			</div>
-			<div class="profile-preview__text text-center flex flex-column gap-8">
-				<h6 v-if="userData.firstName || userData.lastName" class="heading-m text-dark-gray">{{ userData.firstName }} {{ userData.lastName }}</h6>
+			<div v-if="userData.firstName || userData.lastName || userData.email" class="profile-preview__text text-center flex flex-column gap-8">
+				<h6 v-if="userData.firstName || userData.lastName" class="heading-m text-dark-gray text-wrap">{{ userData.firstName }} {{ userData.lastName }}</h6>
 				<p v-if="userData.email" class="body-m text-gray">{{ userData.email }}</p>
 			</div>
 			<div class="profile-preview__links flex flex-column gap-20">
@@ -85,5 +92,9 @@ onUnmounted(() => {
 	&__text {
 		margin-bottom: 5.6rem;
 	}
+}
+
+.text-wrap {
+	word-wrap: break-word;
 }
 </style>

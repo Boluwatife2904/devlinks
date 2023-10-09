@@ -17,13 +17,13 @@ const numberOfPlaceholderLinks = computed(() => {
 		<div class="dashboard__content grid">
 			<div class="dashboard__content--left position-relative bg-white br-12 items-center content-center">
 				<img src="/preview.png" alt="" class="img-fluid block phone" />
-				<div class="mobile-preview position-absolute flex flex-column" :class="{ 'mobile-preview--extended': userData.firstName || userData.lastName || userData.image }">
+				<div class="mobile-preview position-absolute flex flex-column" :class="{ 'mobile-preview--extended': userData.firstName || userData.lastName || userData.image_url }">
 					<div class="mobile-preview__header flex flex-column items-center">
 						<div class="mobile-preview__image">
-							<img v-if="userData.image" :src="userData.image" alt="user image" class="block profile-image" />
+							<img v-if="userData.image_url" :src="userData.image_url" alt="user image" class="block profile-image" />
 							<Placeholder v-else usage="image" />
 						</div>
-						<div class="mobile-preview__text flex flex-column items-center">
+						<div class="mobile-preview__text flex flex-column items-center text-center">
 							<h6 v-if="userData.lastName || userData.firstName" class="weight-600">{{ userData.firstName }} {{ userData.lastName }}</h6>
 							<Placeholder v-else usage="name" />
 							<p v-if="userData.email" class="text-gray">{{ userData.email }}</p>

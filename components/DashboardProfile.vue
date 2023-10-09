@@ -1,19 +1,54 @@
 <script setup lang="ts">
 const { userData } = useStore();
-const haveUploadedImage = ref(false);
+const client = useSupabaseClient();
+const user = useSupabaseUser();
+
+const haveUploadedImage = ref(userData.image_url ? true : false);
+const isLoading = ref(false);
+const fileToUpload = ref<File | null>(null);
 
 const handleImageSelect = (event: Event) => {
 	const target = event.target as HTMLInputElement;
 	const files = target.files;
 	if (files && files.length > 0) {
 		const file = files[0];
-		const reader = new FileReader();
-		reader.onload = function () {
-			userData.image = reader.result as string;
-			haveUploadedImage.value = true;
-		};
-		reader.readAsDataURL(file);
+		if (file.size / 1024 < 1024) {
+			fileToUpload.value = file;
+			const reader = new FileReader();
+			reader.onload = function () {
+				userData.image_url = reader.result as string;
+				haveUploadedImage.value = true;
+			};
+			reader.readAsDataURL(file);
+		} else {
+			useEvent("notify", { type: "error", icon: "error", message: "Image limit of 1mb exceeded" });
+		}
 	}
+};
+
+const saveUserProfile = async () => {
+	isLoading.value = true;
+	let image_url;
+	if (fileToUpload.value) {
+		const fileExtension = fileToUpload.value.name.split(".").pop();
+		const fileName = `${userData.slug}.${fileExtension}`;
+		const { data, error } = await client.storage.from("devlink_avatars").upload(fileName, fileToUpload.value, { upsert: false });
+		if (error) {
+			isLoading.value = false;
+			useEvent("notify", { type: "error", icon: "error", message: "Error uploading profile image!" });
+			return;
+		}
+		image_url = fileName;
+		fileToUpload.value = null;
+	}
+	const { error } = await client.from("devlink_profiles").upsert({ id: user.value?.id, first_name: userData.firstName, last_name: userData.lastName, ...(image_url && { image_url }) });
+	if (error) {
+		isLoading.value = false;
+		useEvent("notify", { type: "error", icon: "error", message: "Error updating your profile!" });
+		return;
+	}
+	isLoading.value = false;
+	useEvent("notify", { type: "success", icon: "save", message: "Your changes have been successfully saved!" });
 };
 </script>
 
@@ -29,7 +64,7 @@ const handleImageSelect = (event: Event) => {
 					<span class="body-m block text-gray w-100 label">Profile picture</span>
 					<div class="flex gap-24">
 						<div class="picker br-12 position-relative">
-							<img v-if="haveUploadedImage" :src="userData.image" alt="user image" class="img-fluid block" />
+							<img v-if="haveUploadedImage" :src="userData.image_url" alt="user image" class="img-fluid block" />
 							<input type="file" name="image" id="image" class="none" accept="image/png, image/jpeg" @change="handleImageSelect" />
 							<label for="image" class="w-100 h-100 flex flex-column gap-8 items-center content-center cursor pointer position-absolute" :class="{ uploaded: haveUploadedImage }">
 								<BaseIcon name="picture" />
@@ -59,7 +94,7 @@ const handleImageSelect = (event: Event) => {
 			</div>
 		</div>
 		<div class="profile__footer flex content-end">
-			<BaseButton size="full">Save</BaseButton>
+			<BaseButton size="full" :is-loading="isLoading" @click="saveUserProfile">Save</BaseButton>
 		</div>
 	</div>
 </template>

@@ -7,16 +7,17 @@ interface Props {
 	label?: string;
 	icon?: string;
 	isInvalid?: boolean;
+	disabled?: boolean;
 }
 
-const { type = "text", placeholder = "", label = "", isInvalid = false, icon = "" } = defineProps<Props>();
+const { type = "text", placeholder = "", label = "", isInvalid = false, icon = "", disabled = false } = defineProps<Props>();
 const modelValue = defineModel<string>();
 </script>
 
 <template>
 	<div class="base-input flex flex-column gap-4 position-relative">
 		<label :for="id" class="base-input__label body-s text-drak-gray" :class="{ 'base-input__label--error': isInvalid }">{{ label }}</label>
-		<input v-model="modelValue" :type="type" :name="name" :id="id" :placeholder="placeholder" class="base-input__element w-100 body-m br-8" :class="{ 'base-input__element--error': isInvalid, 'base-input__element--icon': !icon }" autocomplete="off" />
+		<input v-model="modelValue" :type="type" :name="name" :id="id" :placeholder="placeholder" class="base-input__element w-100 body-m br-8" :class="{ 'base-input__element--error': isInvalid, 'base-input__element--icon': !icon }" autocomplete="off" :disabled="disabled" />
 		<span class="base-input__icon block position-absolute"><BaseIcon :name="icon" /></span>
 		<span v-if="isInvalid" class="base-input__error body-s text-red position-absolute">{{ modelValue === "" ? "Can't be empty" : "Please check again" }}</span>
 	</div>
@@ -57,6 +58,12 @@ const modelValue = defineModel<string>();
 				border-color: $red !important;
 				box-shadow: none !important;
 			}
+		}
+
+		&:disabled {
+			cursor: not-allowed;
+			background-color: $light-gray;
+			color: $gray;
 		}
 	}
 

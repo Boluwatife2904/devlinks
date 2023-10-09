@@ -44,11 +44,23 @@ export default defineNuxtConfig({
 		},
 	},
 	css: ["@/assets/scss/index.scss", "@/assets/scss/fonts.scss"],
-	modules: ["@pinia/nuxt"],
+	modules: ["@pinia/nuxt", "@nuxtjs/supabase"],
 	pinia: {
 		autoImports: ["defineStore", "storeToRefs"],
 	},
 	imports: {
 		dirs: ["stores"],
+	},
+	runtimeConfig: {
+		public: {
+			frontendBaseUrl: process.env.FRONTEND_BASE_URL,
+		},
+	},
+	supabase: {
+		redirect: false,
+		redirectOptions: {
+			login: "/",
+			callback: "/confirm",
+		},
 	},
 });
