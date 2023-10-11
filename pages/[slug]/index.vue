@@ -12,7 +12,7 @@ if (!profile.value) {
 	throw createError({ statusCode: 404, statusMessage: "Profile not found" });
 }
 
-const { first_name = "", last_name = "", email = "", devlink_links = [], image_url = '', } = profile.value;
+const { first_name = "", last_name = "", email = "", devlink_links = [], image_url = "" } = profile.value;
 
 const user: UserData = {
 	firstName: first_name,
@@ -29,8 +29,15 @@ if (image_url) {
 
 useSeoMeta({
 	title: `Devlinks | ${user.firstName} ${user.lastName}`,
+	ogTitle: `Devlinks | ${user.firstName} ${user.lastName}`,
+	twitterTitle: `Devlinks | ${user.firstName} ${user.lastName}`,
 	description: `${user.firstName}'s profile on Devlinks'`,
+	ogDescription: `${user.firstName}'s profile on Devlinks'`,
+	twitterDescription: `${user.firstName}'s profile on Devlinks'`,
 	ogImage: user.image_url,
+	twitterImage() {
+		return { url: user.image_url };
+	},
 });
 
 const links = devlink_links

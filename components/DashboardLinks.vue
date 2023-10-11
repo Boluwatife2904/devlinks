@@ -70,6 +70,9 @@ const saveUserLinks = async () => {
 		return;
 	}
 	useEvent("notify", { type: "success", icon: "save", message: "Your changes have been successfully saved!" });
+	links.value = [...mappedLinks].map(({ id, platform, link, order }) => {
+		return { id, platform, link, order };
+	});
 };
 </script>
 
