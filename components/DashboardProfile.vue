@@ -32,7 +32,7 @@ const saveUserProfile = async () => {
 	if (fileToUpload.value) {
 		const fileExtension = fileToUpload.value.name.split(".").pop();
 		const fileName = `${userData.slug}.${fileExtension}`;
-		const { data, error } = await client.storage.from("devlink_avatars").upload(fileName, fileToUpload.value, { upsert: false });
+		const { error } = await client.storage.from("devlink_avatars").upload(fileName, fileToUpload.value, { upsert: false });
 		if (error) {
 			isLoading.value = false;
 			useEvent("notify", { type: "error", icon: "error", message: "Error uploading profile image!" });

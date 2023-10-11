@@ -11,13 +11,10 @@
 <style lang="scss" scoped>
 .default-layout {
 	@include padding(1.6rem, 2.4rem);
-	// height: 100vh;
-	// overflow-y: hidden;
 
 	&__content {
 		max-width: 144rem;
 		margin: 0 auto;
-		// height: 100%;
 	}
 }
 </style>

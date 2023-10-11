@@ -1,4 +1,11 @@
 <script setup lang="ts">
+useSeoMeta({
+	title: "DevLinks | Dashboard",
+});
+definePageMeta({
+	middleware: "auth",
+});
+
 const { userData } = useStore();
 const { links, showPreview } = storeToRefs(useStore());
 const currentView = ref("links");
@@ -49,7 +56,7 @@ const numberOfPlaceholderLinks = computed(() => {
 				</KeepAlive>
 			</div>
 		</div>
-		<ProfilePreview v-if="showPreview" />
+		<ProfilePreview v-if="showPreview" :show-buttons="true" :user="userData" :links="links" />
 	</div>
 </template>
 

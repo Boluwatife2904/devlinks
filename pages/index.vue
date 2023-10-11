@@ -6,7 +6,6 @@ definePageMeta({
 	layout: "auth",
 });
 
-const client = useSupabaseClient();
 const { isLoading, loginWithSupabase } = useSupabaseAuth();
 const form = reactive({
 	email: "",
@@ -24,7 +23,9 @@ const login = async () => {
 	try {
 		await loginWithSupabase(form);
 		navigateTo({ name: "dashboard" });
-	} catch (error) {}
+	} catch (error) {
+		useEvent("notify", { icon: "error", type: "error", message: error });
+	}
 };
 </script>
 

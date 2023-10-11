@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { VueDraggableNext } from "vue-draggable-next";
 import { v4 as uuidv4 } from "uuid";
+import { useVuelidate } from "@vuelidate/core";
+import { required, url, helpers } from "@vuelidate/validators";
 
 const inputPlaceholders: Record<string, string> = {
-	"": "Select a platform",
+	"": "Enter your link",
 	github: "https://www.github.com/benwright",
 	frontendmentor: "https://www.frontendmentor.io/profile/benwright",
 	twitter: "https://www.twitter.com/benwright",
@@ -27,6 +29,18 @@ const end = ref<HTMLDivElement | null>(null);
 const linksToBeDeleted = ref<string[]>([]);
 const isLoading = ref(false);
 
+const rules = {
+	links: {
+		required,
+		$each: helpers.forEach({
+			platform: { required },
+			link: { required, url },
+		}),
+	},
+};
+
+const v$ = useVuelidate(rules, { links }, { $autoDirty: true });
+
 const addNewLink = async () => {
 	links.value.push({ id: uuidv4(), platform: "", link: "", isNew: true });
 	await nextTick();
@@ -46,11 +60,15 @@ const saveUserLinks = async () => {
 		return { id, platform, link, order: index, profile_id: user.value?.id };
 	});
 	if (linksToBeDeleted.value.length > 0) {
-		await client.from("devlink_links").delete().eq('id', linksToBeDeleted.value);
+		await client.from("devlink_links").delete().eq("id", linksToBeDeleted.value);
 		linksToBeDeleted.value = [];
 	}
-	const { data } = await client.from("devlink_links").upsert(mappedLinks);
+	const { error } = await client.from("devlink_links").upsert(mappedLinks);
 	isLoading.value = false;
+	if (error) {
+		useEvent("notify", { type: "error", icon: "save", message: "Failed to save changes. Please try again." });
+		return;
+	}
 	useEvent("notify", { type: "success", icon: "save", message: "Your changes have been successfully saved!" });
 };
 </script>
@@ -77,16 +95,16 @@ const saveUserLinks = async () => {
 								<button class="text-gray body-m" @click="deleteLink(link)">Remove</button>
 							</div>
 							<BaseSelect v-model="link.platform" />
-							<BaseInput v-model="link.link" id="" name="" type="url" icon="link" label="Link" :placeholder="inputPlaceholders[link.platform]" />
+							<BaseInput v-model="link.link" id="" name="" type="url" icon="link" label="Link" :is-invalid="v$.links.$each.$response.$data[index].link.$invalid" :placeholder="inputPlaceholders[link.platform]" />
 						</div>
 					</VueDraggableNext>
 				</section>
 				<EmptyState v-else />
 			</div>
 		</div>
-		<div v-if="links.length > 0" class="links__footer flex content-end">
+		<div v-if="links.length > 0 || linksToBeDeleted.length > 0" class="links__footer flex content-end">
 			<span ref="end" class="block"></span>
-			<BaseButton size="full" :is-loading="isLoading" @click="saveUserLinks">Save</BaseButton>
+			<BaseButton size="full" :is-loading="isLoading" :disabled="v$.$invalid && linksToBeDeleted.length === 0" @click="saveUserLinks">Save</BaseButton>
 		</div>
 	</div>
 </template>

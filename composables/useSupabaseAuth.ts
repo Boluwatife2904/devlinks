@@ -8,7 +8,7 @@ export const useSupabaseAuth = () => {
 		const { data, error } = await client.auth.signInWithPassword({ ...form });
 		if (error) {
 			isLoading.value = false;
-			throw new Error("An internal error occured!!!!!");
+			throw new Error(error.message);
 		}
 		await createNewProfile(data.user);
 	};
@@ -18,7 +18,7 @@ export const useSupabaseAuth = () => {
 		const { data, error } = await client.auth.signUp({ ...form });
 		if (error) {
 			isLoading.value = false;
-			throw new Error("An internal error occured!!!!!");
+			throw new Error(error.message);
 		}
 		await createNewProfile(data.user);
 	};
@@ -37,5 +37,5 @@ export const useSupabaseAuth = () => {
 		}
 	};
 
-	return { createNewProfile, loginWithSupabase, isLoading };
+	return { createNewProfile, loginWithSupabase, signUpWithSupabase, isLoading };
 };

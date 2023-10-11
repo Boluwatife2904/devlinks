@@ -19,7 +19,11 @@ const modelValue = defineModel<string>();
 		<label :for="id" class="base-input__label body-s text-drak-gray" :class="{ 'base-input__label--error': isInvalid }">{{ label }}</label>
 		<input v-model="modelValue" :type="type" :name="name" :id="id" :placeholder="placeholder" class="base-input__element w-100 body-m br-8" :class="{ 'base-input__element--error': isInvalid, 'base-input__element--icon': !icon }" autocomplete="off" :disabled="disabled" />
 		<span class="base-input__icon block position-absolute"><BaseIcon :name="icon" /></span>
-		<span v-if="isInvalid" class="base-input__error body-s text-red position-absolute">{{ modelValue === "" ? "Can't be empty" : "Please check again" }}</span>
+		<span v-if="isInvalid" class="base-input__error bg-white body-s text-red position-absolute">
+			<template v-if="modelValue === ''">Can't be empty</template>
+			<template v-else-if="modelValue && icon === 'link'">Please check the URL</template>
+			<template v-else>Please check again</template>
+		</span>
 	</div>
 </template>
 
@@ -75,6 +79,7 @@ const modelValue = defineModel<string>();
 	&__error {
 		right: 1.6rem;
 		bottom: 1.6rem;
+		@include padding(0 0 0 0.5rem);
 	}
 }
 </style>

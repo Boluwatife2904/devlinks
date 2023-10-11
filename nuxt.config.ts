@@ -23,6 +23,7 @@ export default defineNuxtConfig({
 				{ hid: "twitter:image", name: "twitter:image", content: "https://res.cloudinary.com/juwon-tech/image/upload/v1696234058/Screenshot_2023-10-02_at_09.06.55_mkc9co.png" },
 				{ hid: "twitter:card", name: "twitter:card", content: "summary_large_image" },
 			],
+			link: [{ rel: "icon", type: 'image/png',  href: "/favicon.ico" }],
 		},
 	},
 	vite: {

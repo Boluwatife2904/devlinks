@@ -7,7 +7,7 @@ const addNewNotification = (type: string, message: string, icon: string) => {
 	notifications.value.push({ _id: uuidv4(), type, message, icon });
 	setTimeout(() => {
 		notifications.value.splice(notifications.value.length - 1, 1);
-	}, 5000);
+	}, 1000);
 };
 
 useListen("notify", (notification: { type: string; icon: string; message: string }) => {
@@ -19,10 +19,8 @@ useListen("notify", (notification: { type: string; icon: string; message: string
 	<ul class="notifications position-fixed flex items-center flex-column w-100">
 		<TransitionGroup name="slideIn">
 			<li v-for="notification in notifications" :key="notification._id" class="notifications__item flex br-12 gap-8" :class="[`notifications__item--${notification.type}`]">
-				<span class="flex-shrink-0 lh-0">
-					<IconNotifications :name="notification.icon" />
-				</span>
-				<span class="heading-s weight-600 lh-0 flex items-center">{{ notification.message }}</span>
+				<IconNotifications :name="notification.icon" />
+				<p class="heading-s weight-600">{{ notification.message }}</p>
 			</li>
 		</TransitionGroup>
 	</ul>
@@ -45,6 +43,11 @@ useListen("notify", (notification: { type: string; icon: string; message: string
 		width: 95%;
 		max-width: 40.6rem;
 		box-shadow: 0px 0px 32px 0px rgba(0, 0, 0, 0.1);
+		align-items: flex-start;
+
+		svg {
+			transform: translateY(0.3rem);
+		}
 
 		&--success {
 			background-color: $dark-gray;

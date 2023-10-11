@@ -1,10 +1,16 @@
 <script setup lang="ts">
-const { showPreview, links } = storeToRefs(useStore());
-const { userData } = useStore();
+interface Props {
+	showButtons?: boolean;
+	user: UserData;
+	links: Link[];
+}
+
+const { showPreview } = storeToRefs(useStore());
 const config = useRuntimeConfig();
+const { showButtons = false, user, links = [] } = defineProps<Props>();
 
 const copyLink = async () => {
-	const link = `${config.public.frontendBaseUrl}/${userData.slug}`;
+	const link = `${config.public.frontendBaseUrl}/${user.slug}`;
 	await navigator.clipboard.writeText(link);
 	useEvent("notify", { type: "success", icon: "link", message: "The link has been copied to your clipboard!" });
 };
@@ -21,18 +27,18 @@ onUnmounted(() => {
 <template>
 	<div class="profile-preview bg-white">
 		<div class="profile-preview__cover">
-			<div class="profile-preview__actions br-12 bg-white flex items-center content-between">
+			<div v-if="showButtons" class="profile-preview__actions br-12 bg-white flex items-center content-between">
 				<BaseButton variant="secondary" @click="showPreview = false">Back to Editor</BaseButton>
 				<BaseButton @click="copyLink">Share Link</BaseButton>
 			</div>
 		</div>
 		<div class="profile-preview__content">
-			<div v-if="userData.image_url" class="profile-preview__image">
-				<img :src="userData.image_url" alt="user image" class="block profile-image" />
+			<div v-if="user.image_url" class="profile-preview__image">
+				<img :src="user.image_url" alt="user image" class="block profile-image" />
 			</div>
-			<div v-if="userData.firstName || userData.lastName || userData.email" class="profile-preview__text text-center flex flex-column gap-8">
-				<h6 v-if="userData.firstName || userData.lastName" class="heading-m text-dark-gray text-wrap">{{ userData.firstName }} {{ userData.lastName }}</h6>
-				<p v-if="userData.email" class="body-m text-gray">{{ userData.email }}</p>
+			<div v-if="user.firstName || user.lastName || user.email" class="profile-preview__text text-center flex flex-column gap-8">
+				<h6 v-if="user.firstName || user.lastName" class="heading-m text-dark-gray text-wrap">{{ user.firstName }} {{ user.lastName }}</h6>
+				<p v-if="user.email" class="body-m text-gray">{{ user.email }}</p>
 			</div>
 			<div class="profile-preview__links flex flex-column gap-20">
 				<template v-for="link in links">

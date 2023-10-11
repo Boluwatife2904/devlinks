@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const modelValue = defineModel<string>();
-const { links } = storeToRefs(useStore());
+// const { links } = storeToRefs(useStore());
 
 const platforms = [
 	{ key: "github", label: "GitHub" },
@@ -28,11 +28,12 @@ const selectedPlatform = computed(() => {
 	return platforms.find((platform) => platform.key === modelValue.value);
 });
 
-const unselectedPlatforms = computed(() => {
-	return platforms.filter((platform) => {
-		return links.value.findIndex((link) => link.platform === platform.key) === -1;
-	});
-});
+// const unselectedPlatforms = computed(() => {
+// 	// return platforms.filter((platform) => {
+// 	// 	return links.value.findIndex((link) => link.platform === platform.key) === -1;
+// 	// });
+// 	// return platforms;
+// });
 
 const toggleDropdown = () => {
 	showDropdown.value = !showDropdown.value;
@@ -56,7 +57,7 @@ const toggleDropdown = () => {
 		</div>
 		<Transition name="slideIn" mode="out-in" appear>
 			<ul v-if="showDropdown" class="base-select__dropdown w-100 flex flex-column gap-12 br-8 bg-white position-absolute">
-				<li v-for="platform in unselectedPlatforms" :key="platform.key" class="flex items-center gap-12 body-m text-gray" :class="{ selected: modelValue === platform.key }" @click="selectPlatform(platform.key)">
+				<li v-for="platform in platforms" :key="platform.key" class="flex items-center gap-12 body-m text-gray" :class="{ selected: modelValue === platform.key }" @click="selectPlatform(platform.key)">
 					<IconLinks :name="platform.key" />
 					<span class="text-dark-gray">{{ platform.label }}</span>
 				</li>
